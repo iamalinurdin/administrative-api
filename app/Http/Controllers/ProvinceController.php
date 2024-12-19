@@ -15,12 +15,21 @@ class ProvinceController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
-  public function __invoke(Request $request)
+  public function index(Request $request)
   {
     $provinces = Province::all();
 
     return JsonResponse::success(
       data: ProvinceResource::collection($provinces)
+    );
+  }
+
+  public function show($id)
+  {
+    $province = Province::find($id);
+
+    return JsonResponse::success(
+      data: new ProvinceResource($province)
     );
   }
 }

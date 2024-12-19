@@ -12,13 +12,22 @@ class CityController extends Controller
   /**
    * Handle the incoming request.
    */
-  public function __invoke(Request $request)
+  public function index(Request $request)
   {
     $province = $request->query('province_id');
     $cities = City::where('province_id', $province)->get();
 
     return JsonResponse::success(
       data: CityResource::collection($cities)
+    );
+  }
+
+  public function show($id)
+  {
+    $city = City::find($id);
+
+    return JsonResponse::success(
+      data: new CityResource($city)
     );
   }
 }
